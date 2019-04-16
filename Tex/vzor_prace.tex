@@ -87,9 +87,14 @@
 \begin{document}
 %
 \maketitle
+
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\addtocontents{toc}{\protect\pagestyle{empty}}
 \tableofcontents
+\thispagestyle{empty}
 
 \chapter{Úvod}
+\setcounter{page}{1}
 %V souboru \texttt{literatura.bib} jsou uvedeny příklady, jak citovat knihu \cite{KnuthAOCP2}, článek v časopisu \cite{Hoare1961}, webovou stránku \cite{Graphics2D}.
  
 \newpage
@@ -234,9 +239,18 @@ Na obrázku Obrázek \ref{pic:bzLifecycle} je naznačen výchozí životní cykl
 \end{figure}
 
 Integrace s verzovacím systémem je velice jednoduchá, stačí připojit požadovaný systém k Bugzille. Po připojení se propojují commity pomocí jejich popisu. K propojení dojde pokud v commitu Bugzilla nalezne klíčová slova \uv{bug} nebo \uv{issue} a číslo daného bugu nebo problému. Příkladem pak může být následující commit: \uv{Tento commit opravuje \textit{issue 12, bug 18} a \textit{bug 92}.}. Od verze 5.0 nabízí Bugzilla i REST API, které je poté možno využít pro získání dat pro aplikace třetích stran. Pro starší verze Bugzilly je možné použít \textit{BzAPI}, které podporuje verzi 3.4 a vyšší, nevýhodou však je, že je to samostatný serverový software.
-\section{Redmine}
 
-%TODO Moznosti zapisovani bugu - github, jira, bugzilla, redmine \href{https://en.wikipedia.org/wiki/Bug_tracking_system}{link4} 
+%NOTES https://wiki.mozilla.org/Bugzilla:REST_API https://bugzilla.readthedocs.io/en/latest/api/index.html
+\section{Redmine}
+Redmine je flexibilní webová aplikace pro projektový management. Je open source a jako ostatní konkurenti nabízí zajímavé funkce jako úpravu vlastností problémů, časových záznamů, projektů a uživatelů. Podporuje více projektů a ke každému nabízí řadu doplňkových funkcí: notifikace emailem, vlastní wiki stránky a nebo fórum pro každý projekt, sledování času, propojení s verzovacími systémy, vytvoření problému pomocí emailu, správa uživatelů a rolí uživatelů a mnoho dalšího.
+
+Integrace s verzovacím systémem probíhá přímo pomocí Redmine. Je možno vytvořit nový repositář nebo spojit Redmine s již existujícím repositářem. Po načtení všeho potřebného je možno spojit commity s problémem nebo bugem. Redmine skenuje zprávy commitů pro reference problémů. Je možné také pomocí commit zprávy automaticky uzavřít náležící problém nebo bug. Po detekci funkce automatického uzavření, Redmine přiřadí náležitý status. Defaultní klíčová slova pro referenci na problém jsou: \textit{refs}, \textit{references}, \textit{IssueID}. Pro vyřešení problémů (v tomto případě bugů) jsou to klíčová slova: \textit{fixes} a \textit{closes}. Pro detekci musí být klíčové slovo odděleno od čísla reference mezerou a číslo reference musí začínat \#. V základu není nastaveno žádné klíčové slovo pro automatické uzavírání problémů, ale Redmine umožňuje nadefinování nového. Taktéž umožňuje nadefinování nových klíčových slov nebo úpravu stávajících, či dokonce nahrazení slova jen jako jednoduchou hvězdu (*). V případě poslední možnosti je jakékoliv nalezené ID spárováno s patřičným problémem.
+Příkladem pak může být zpráva: \uv{This commit refs \#1, \#2 and fixes \#3}. Tato zpráva odkazuje na problém číslo 1 a 2 a opravuje problém číslo 3. Pro rozdělení jednotlivých referencí slouží znaky mezery čárky nebo \&.\cite{redminebugtracking}
+
+Redmine poskytuje REST API pro těžení informací z repositáře. API podporuje základní CRUD operace (vytvoř, uprav a odstraň). V základu není API povoleno, proto je nutné ho povolit v nastavení projektu.
+
+%TODO https://en.wikipedia.org/wiki/Comparison_of_issue-tracking_systems
+%TODO Moznosti zapisovani bugu - github \href{https://en.wikipedia.org/wiki/Bug_tracking_system}{link4} 
 
 
 %TODO pridani vyhody trackovani- snadna detekce duplikatu, klasifikace - prideleni odpovednym oddelenim, klasifikace - nejpravdepodobnejsi pricina, prioritizace \href{https://backlog.com/bug-tracking-guide/}{link5} 
@@ -247,7 +261,6 @@ Integrace s verzovacím systémem je velice jednoduchá, stačí připojit poža
 
 
 \chapter{Klasifikační metody}
-
 
 
 
